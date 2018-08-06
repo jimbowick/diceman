@@ -19,7 +19,7 @@ img {
     <center>to become a part of the <a href="http:/www.sensation.com">sensation</a></a> bringing meaning 
     to the lives of assholes the world over.</center>
 </p>
-<table style="width:100%">
+<table style="width:100%" id="simpletable">
     <tr>
         <th align="left">Name</th>
         <th align="left">Occupation</th>
@@ -41,6 +41,37 @@ img {
         <td>Token black guy all his life</td>
     </tr>
 </table>
-
+<script>
+    var samdata = ["hi","I like","food"];
+    var jimdata = ["my","name","jim"];
+    var table = document.createElement("table");
+    var header = document.createElement("tr");
+    var idHeaderCell = document.createElement("th");
+    var nameHeaderCell = document.createElement("th");
+    var relevanceHeaderCell = document.createElement("th");
+    header.appendChild(idHeaderCell);
+    header.appendChild(nameHeaderCell);
+    header.appendChild(relevanceHeaderCell);
+    table.appendChild(header);
+    for(var i = 0; i < samdata.length; i++) {
+        var id = (i + 1);
+        var name = samdata[i];
+        var relevance = jimdata[i];
+        var tr = document.createElement("tr");
+        var idCell = document.createElement("td");
+        var nameCell = document.createElement("td");
+        var relevanceCell = document.createElement("td");
+        idCell.appendChild(document.createTextNode(id));
+        nameCell.appendChild(document.createTextNode(name));
+        relevanceCell.appendChild(document.createTextNode(relevance));
+        tr.appendChild(idCell);
+        tr.appendChild(nameCell);
+        tr.appendChild(relevanceCell);
+        table.appendChild(tr);
+    }
+    var frag = document.createDocumentFragment()
+    frag.appendChild(table)
+    document.body.insertBefore(frag,document.getElementById("simpletable"))
+</script>
 </body>
 </html>
