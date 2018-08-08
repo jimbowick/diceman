@@ -3,7 +3,7 @@
 <Header>This is where the action happens</Header>
 <body style="background-color:powderblue">
 <form name="form_one" action="#">
-    <input name="name" type="text" placeholder="Enter your name" /><br>
+    <input name="name" type="text" placeholder="Enter your name" />
     <input type="button" onclick="naming()" />
 </form>
 
@@ -12,7 +12,7 @@
 <script>
 function naming() {
     var name = document.form_one.name.value;
-    document.getElementById("intro").innerHTML ="Now what is your pleasure,"+name;
+    document.getElementById("intro").innerHTML ="Now what is your pleasure, "+name +"?";
     }
 </script>
 
