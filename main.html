@@ -1,4 +1,20 @@
 <html>
 <title> Action Jackson </title>
 <Header>This is where the action happens</Header>
+<body style="background-color:powderblue">
+<form>
+    <input type="text" class="name" placeholder="Enter your name" 
+    name="name" id=thename value=""><button onclick="naming"></button>
+</form>
+
+<p id="intro">Now what is your pleasure,</p>
+
+<script>
+function naming() {
+    var name = document.getElementById("name");
+    document.getElementById("intro").innerHTML = thename.value;
+    }
+</script>
+
+</body>
 </html>
