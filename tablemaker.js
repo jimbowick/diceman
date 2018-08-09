@@ -14,7 +14,7 @@ class tablemaker{
         document.body.insertBefore(table,document.getElementById(insertTableBefore))
     }
 
-    ShowTableFromObject(insertTableBefore){
+    ShowTableFromObject(){
         var table = document.createElement("table");
         table.id = "objecttable"
         table.border = 1;
@@ -31,10 +31,10 @@ class tablemaker{
             tr.appendChild(td);
             table.appendChild(tr);
         });
-        document.body.insertBefore(table,document.getElementById(insertTableBefore))
+        document.body.insertBefore(table,document.getElementById("spacer2"))
     }
 
-    ShowTableFromArrayOfObjects(insertTableBefore){
+    ShowTableFromArrayOfObjects(){
         var table = document.createElement("table");
         table.id = "movestable"
         table.border = 1;
@@ -56,6 +56,6 @@ class tablemaker{
             });
             table.appendChild(tr);
         }
-        document.body.insertBefore(table,document.getElementById(insertTableBefore))
+        document.body.insertBefore(table,document.getElementById("spacer1"))
     }
 }
