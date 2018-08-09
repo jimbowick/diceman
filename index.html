@@ -46,5 +46,23 @@ img {
     </tr>
 </table>
 <script type="text/javascript" src="tablemaker.js"></script>
+<script>
+var moveset = [ {movename:"surestrike", damage:8}, {movename:"lightstrike", damage:4} ]
+var equipped = {weapon:"sword of ages", armor:"blessed breastplate", health:100}
+var tm = new tablemaker(moveset,equipped)
+tm.ShowTableFromObject("spacer2")
+tm.ShowTableFromArrayOfObjects("spacer1")
+document.getElementById("wandbut").onclick = function(){ 
+    var newmove = {movename:"newstrike",damage:"300"}
+    if(!moveset.find(mov=>mov.movename==newmove.movename)){
+        moveset.push(newmove)
+        var elem = document.getElementById("movestable");
+        elem.parentNode.removeChild(elem);
+        tm.ShowTableFromArrayOfObjects("spacer1")
+    }else{
+        alert("you already got your move!");
+    }
+}
+</script>
 </body>
 </html>
