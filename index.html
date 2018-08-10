@@ -23,18 +23,37 @@ img {
 <p/>
 <p id="spacer1"></p>
 <p id="spacer2" ></p>
-<p><Button id="dicey" style="width:200px">Click to roll</Button></p>
+<p><Button id="dicey" style="width:200px"></Button></p>
 <P id="enemy"></P>
 <script type="text/javascript" src="dicemanager.js"></script>
 <script type="text/javascript" src="tablemaker.js"></script>
 <script>
-document.getElementById("dicey").onclick = function(){
-    var numberRolled = dicemanager()
-    this.innerHTML = numberRolled
-    attackEnemy(numberRolled,1)
-};
+
+
+function getAttacked(enemyRoll){
+    if(enemyRoll>equipped.armor){
+        equipped.health = equipped.health - currentEnemy.attackDamage
+        myTableMaker.RefreshCharacterStatus()
+    }
+    if(equipped.health<=0){
+        equipped.health = 0    
+        myTableMaker.RefreshCharacterStatus()
+       daButton.innerHTML = "You're Dead - Click to revive"
+       daButton.onclick = function(){
+            equipped.health = 100
+            myTableMaker.RefreshCharacterStatus()
+            EnterNewBattle()
+           
+       };
+    }
+}
 function killAnEnemy(){
-    document.getElementById("enemy").innerHTML = "The enemy has died!"
+    document.getElementById("enemy").innerHTML = "The enemy has died!";
+    document.getElementById("dicey").innerHTML = "Find a new foe";
+    daButton.onclick = function(){
+        currentEnemy = {health:10,armorrating:5,attackDamage:8};
+        EnterNewBattle()
+    };
 }
 function showAnEnemy(){
     document.getElementById("enemy").innerHTML = "Enemy Health: " + currentEnemy.health + " , Enemy Armor Rating: "+currentEnemy.armorrating
@@ -42,19 +61,33 @@ function showAnEnemy(){
 function attackEnemy(num,i){
     if(num>currentEnemy.armorrating){
         currentEnemy.health = currentEnemy.health - moveset[i].damage
-        
         showAnEnemy()
     }
     if(currentEnemy.health<=0){
         killAnEnemy()
     }
 }
-var currentEnemy = {health:10,armorrating:5}
-showAnEnemy() 
 
+function ButtonToBattleMode(){
+    daButton.innerHTML = "click to roll"
+    daButton.onclick = function(){
+        var numberRolled = dicemanager()
+        this.innerHTML = numberRolled
+        attackEnemy(numberRolled,0)
+        getAttacked(dicemanager())
+    };
+}
+function EnterNewBattle(){
+    showAnEnemy()
+    ButtonToBattleMode()
+}
+var daButton = document.getElementById("dicey");
+var currentEnemy = {health:10,armorrating:5,attackDamage:8}
 var moveset = [ {movename:"surestrike", damage:8}, {movename:"lightstrike", damage:4} ]
-var equipped = {weapon:"sword of ages", armor:"blessed breastplate", health:100}
-new tablemaker(moveset,equipped).ShowCharacterStatus()
+var equipped = {weapon:"sword of ages", armor:1, health:100}
+var myTableMaker = new tablemaker(moveset,equipped)
+myTableMaker.ShowCharacterStatus()
+EnterNewBattle()
 </script>
 </body>
 </html>

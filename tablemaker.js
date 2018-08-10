@@ -19,6 +19,14 @@ class tablemaker{
         }
     }
 
+    RefreshCharacterStatus(){
+        var elem = document.getElementById("movestable");
+        elem.parentNode.removeChild(elem);
+        elem = document.getElementById("objecttable");
+        elem.parentNode.removeChild(elem);
+        this.ShowCharacterStatus();
+    }
+
     ShowTableFromArray(dataToShow,insertTableBefore){
         var table = document.createElement("table");
         for(var i = 0; i < dataToShow.length; i++) {
