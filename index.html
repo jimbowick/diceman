@@ -21,6 +21,9 @@ img {
     to the lives of assholes the world over.</center>
 </p>
 <p/>
+<table border="1" width="500"><tr><td height="100" id=infoPanel><center>Welcome to the land of crazy shit</center></td></tr></table>
+<button id="navi1"></button>
+<button id="navi2"></button>
 <p id="spacer1"></p>
 <p id="spacer2" ></p>
 <p><Button id="dicey" style="width:200px"></Button></p>
@@ -31,16 +34,16 @@ img {
 
 
 function getAttacked(enemyRoll){
-    if(enemyRoll>equipped.armor){
-        equipped.health = equipped.health - currentEnemy.attackDamage
+    if(enemyRoll>playerStats.armor){
+        playerStats.health = playerStats.health - currentEnemy.attackDamage
         myTableMaker.RefreshCharacterStatus()
     }
-    if(equipped.health<=0){
-        equipped.health = 0    
+    if(playerStats.health<=0){
+        playerStats.health = 0    
         myTableMaker.RefreshCharacterStatus()
        daButton.innerHTML = "You're Dead - Click to revive"
        daButton.onclick = function(){
-            equipped.health = 100
+            playerStats.health = 100
             myTableMaker.RefreshCharacterStatus()
             EnterNewBattle()
            
@@ -81,13 +84,35 @@ function EnterNewBattle(){
     showAnEnemy()
     ButtonToBattleMode()
 }
+
+function ButtonToNavigate(){
+    naviButton1.innerHTML ="Go find enemies"
+    naviButton1.onclick = function(){
+        EnterNewBattle()
+    }   
+    naviButton2.innerHTML ="Rest and Heal"
+    naviButton2.onclick = function(){
+        playerStats.health = playerStats.health + 6
+        myTableMaker.RefreshCharacterStatus()
+    if(playerStats.health>=100){
+        playerStats.health = 100
+        myTableMaker.RefreshCharacterStatus()
+        document.getElementById("infoPanel").innerHTML = "You are fully refreshed. Continue the fight lazy swine!"
+
+    }
+    }     
+
+}
+
+var naviButton1 = document.getElementById("navi1");
+var naviButton2 = document.getElementById("navi2");
 var daButton = document.getElementById("dicey");
-var currentEnemy = {health:10,armorrating:5,attackDamage:8}
+var currentEnemy = {health:10,armorrating:3,attackDamage:8}
 var moveset = [ {movename:"surestrike", damage:8}, {movename:"lightstrike", damage:4} ]
-var equipped = {weapon:"sword of ages", armor:1, health:100}
-var myTableMaker = new tablemaker(moveset,equipped)
+var playerStats = {weapon:"sword of ages", armor:5, health:100}
+var myTableMaker = new tablemaker(moveset,playerStats)
 myTableMaker.ShowCharacterStatus()
-EnterNewBattle()
+ButtonToNavigate()
 </script>
 </body>
 </html>

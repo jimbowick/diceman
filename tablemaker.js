@@ -1,6 +1,6 @@
 class tablemaker{
     
-    constructor(moveset,equipped){}
+    constructor(moveset,playerStats){}
 
     ShowCharacterStatus(){
         this.ShowTableFromObject()
@@ -43,7 +43,7 @@ class tablemaker{
         var table = document.createElement("table");
         table.id = "objecttable"
         table.border = 1;
-        Object.entries(equipped).forEach(
+        Object.entries(playerStats).forEach(
         ([key, value]) => {
             var tr = document.createElement("tr");
             var td = document.createElement("td");
