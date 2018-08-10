@@ -16,53 +16,45 @@ img {
         <img src="here.png" onmouseover="this.src='herered.png'" 
         onmouseout="this.src='here.png'" alt="Here Bois!">
     </a></center>
+    <center><a href="diceman.html">Face the Diceman</a></center>
     <center>to become a part of the <a href="http:/www.sensation.com">sensation</a></a> bringing meaning 
     to the lives of assholes the world over.</center>
 </p>
-<button id="wandbut">get a free move</button>
 <p/>
-<p id="spacer1" ></p>
+<p id="spacer1"></p>
 <p id="spacer2" ></p>
-<table style="width:100%" id="simpletable">
-    <tr>
-        <th align="left">Name</th>
-        <th align="left">Occupation</th>
-        <th align="left">Biography</th>
-    </tr>
-    <tr>
-        <td>Bilbo Broggins</td>
-        <td>One Bad Motherfucker</td>
-        <td>Once ate a giants toe</td>
-    </tr>
-    <tr>
-        <td>Charlene Soberino</td>
-        <td>Alcoholic</td>
-        <td>Kills beanbags for the hell of it</td>
-    </tr>
-    <tr>
-        <td>Roger Greenspan</td>
-        <td>Economist</td>
-        <td>Token black guy all his life</td>
-    </tr>
-</table>
+<p><Button id="dicey" style="width:200px">Click to roll</Button></p>
+<P id="enemy"></P>
+<script type="text/javascript" src="dicemanager.js"></script>
 <script type="text/javascript" src="tablemaker.js"></script>
 <script>
-var moveset = [ {movename:"surestrike", damage:8}, {movename:"lightstrike", damage:4} ]
-var equipped = {weapon:"sword of ages", armor:"blessed breastplate", health:100}
-var tm = new tablemaker(moveset,equipped)
-tm.ShowTableFromObject()
-tm.ShowTableFromArrayOfObjects()
-document.getElementById("wandbut").onclick = function(){ 
-    var newmove = {movename:"newstrike",damage:"300"}
-    if(!moveset.find(mov=>mov.movename==newmove.movename)){
-        moveset.push(newmove)
-        var elem = document.getElementById("movestable");
-        elem.parentNode.removeChild(elem);
-        tm.ShowTableFromArrayOfObjects()
-    }else{
-        alert("you already got your move!");
+document.getElementById("dicey").onclick = function(){
+    var numberRolled = dicemanager()
+    this.innerHTML = numberRolled
+    attackEnemy(numberRolled,1)
+};
+function killAnEnemy(){
+    document.getElementById("enemy").innerHTML = "The enemy has died!"
+}
+function showAnEnemy(){
+    document.getElementById("enemy").innerHTML = "Enemy Health: " + currentEnemy.health + " , Enemy Armor Rating: "+currentEnemy.armorrating
+}
+function attackEnemy(num,i){
+    if(num>currentEnemy.armorrating){
+        currentEnemy.health = currentEnemy.health - moveset[i].damage
+        
+        showAnEnemy()
+    }
+    if(currentEnemy.health<=0){
+        killAnEnemy()
     }
 }
+var currentEnemy = {health:10,armorrating:5}
+showAnEnemy() 
+
+var moveset = [ {movename:"surestrike", damage:8}, {movename:"lightstrike", damage:4} ]
+var equipped = {weapon:"sword of ages", armor:"blessed breastplate", health:100}
+new tablemaker(moveset,equipped).ShowCharacterStatus()
 </script>
 </body>
 </html>

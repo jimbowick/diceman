@@ -1,0 +1,44 @@
+<DOCTYPE! html>
+    <html>
+        <Header>The Diceman Cometh</Header>
+        <body>
+            <button id="roller" onclick="rollFour()">Roll the Dice</button>
+            <table border="1" id="resultsTable">
+                <tr>
+                    <td width="50px"><b>You</b></td>
+                    <td width="50px" style="visibility:hidden"></td>
+                    <td width="50px"><b>The Diceman</b></td>
+                    <td width="50px" style="visibility:hidden"></td>
+
+                </tr>
+                <tr>
+                    <td width="50px" id="myResults"></td>
+                    <td width="50px" id="myResults2"></td>
+                    <td width="50px" id="dicemanResults"></td>
+                    <td width="50px" id="dicemanResults2"></td>
+                </tr>
+        
+            </table>
+            <p id="resultId"></p>
+<script>
+    function rollFour() {
+        
+        var myNum = Math.floor((Math.random() * 6) + 1);
+        var myNum2 = Math.floor((Math.random() * 6) + 1);
+        var diceManNum = Math.floor((Math.random() * 6) + 1); 
+        var diceManNum2 = Math.floor((Math.random() * 6) + 1);
+        document.getElementById("myResults").innerHTML = myNum;
+        document.getElementById("myResults2").innerHTML = myNum2;
+        document.getElementById("dicemanResults").innerHTML = diceManNum;
+        document.getElementById("dicemanResults2").innerHTML = diceManNum2;
+        if(myNum + myNum2>diceManNum + diceManNum2){
+            document.getElementById("resultId").innerHTML = "You Win";
+        }else{
+            document.getElementById("resultId").innerHTML = "You Lose";
+        }
+    }
+</script>
+        </body>
+
+    </html>
+</DOCTYPE>

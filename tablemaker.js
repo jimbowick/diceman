@@ -2,6 +2,23 @@ class tablemaker{
     
     constructor(moveset,equipped){}
 
+    ShowCharacterStatus(){
+        this.ShowTableFromObject()
+        this.ShowTableFromArrayOfObjects()
+    }
+
+    GiveNewMove(){
+        var newmove = {movename:"newstrike",damage:"300"}
+        if(!moveset.find(mov=>mov.movename==newmove.movename)){
+            moveset.push(newmove)
+            var elem = document.getElementById("movestable");
+            elem.parentNode.removeChild(elem);
+            tm.ShowTableFromArrayOfObjects()
+        }else{
+            alert("you already got your move!");
+        }
+    }
+
     ShowTableFromArray(dataToShow,insertTableBefore){
         var table = document.createElement("table");
         for(var i = 0; i < dataToShow.length; i++) {
