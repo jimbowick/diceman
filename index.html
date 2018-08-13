@@ -22,15 +22,17 @@ img {
 </p>
 <p/>
 <table border="1" width="500"><tr><td height="100" id=infoPanel><center>Welcome to the land of crazy shit</center></td></tr></table>
-<button id="navi1"></button>
-<button id="navi2"></button>
+<button id="navi1" style="height:100;width:200px"></button>
+<button id="navi2" style="height:100;width:200px"></button>
 <p id="spacer1"></p>
 <p id="spacer2" ></p>
-<p><Button id="dicey" style="width:200px"></Button></p>
+<p><Button id="dicey" style="height:100;width:200px"></Button></p>
 <P id="enemy"></P>
+<P id="enemyroll"></P>
 <script type="text/javascript" src="dicemanager.js"></script>
 <script type="text/javascript" src="tablemaker.js"></script>
 <script>
+
 
 
 function getAttacked(enemyRoll){
@@ -49,17 +51,24 @@ function getAttacked(enemyRoll){
            
        };
     }
+    document.getElementById("enemyroll").innerHTML = "Enemy's Roll: " + enemyRoll
 }
 function killAnEnemy(){
-    document.getElementById("enemy").innerHTML = "The enemy has died!";
+    enemy.innerHTML = "The enemy has died!";
     document.getElementById("dicey").innerHTML = "Find a new foe";
     daButton.onclick = function(){
-        currentEnemy = {health:10,armorrating:5,attackDamage:8};
+        currentEnemy = getAGoblin();
         EnterNewBattle()
     };
 }
+
+function getAGoblin(){
+    var goblinarmor = Math.floor((Math.random() * 5) + 1);
+    return {health:10,armorrating:goblinarmor,attackDamage:8}
+}
+
 function showAnEnemy(){
-    document.getElementById("enemy").innerHTML = "Enemy Health: " + currentEnemy.health + " , Enemy Armor Rating: "+currentEnemy.armorrating
+    enemy.innerHTML = "Enemy Health: " + currentEnemy.health + " , Enemy Armor Rating: "+currentEnemy.armorrating
 }
 function attackEnemy(num,i){
     if(num>currentEnemy.armorrating){
@@ -72,47 +81,62 @@ function attackEnemy(num,i){
 }
 
 function ButtonToBattleMode(){
-    daButton.innerHTML = "click to roll"
+    daButton.innerHTML = "Click to roll"
     daButton.onclick = function(){
         var numberRolled = dicemanager()
         this.innerHTML = numberRolled
-        attackEnemy(numberRolled,0)
+        attackEnemy(numberRolled,0)        
         getAttacked(dicemanager())
     };
+    enemy.style.display = "block"
+    enemyroll.style.display = "block"
 }
 function EnterNewBattle(){
+    currentEnemy = getAGoblin();
     showAnEnemy()
     ButtonToBattleMode()
 }
 
-function ButtonToNavigate(){
+function ButtonToNavigateMode(){
     naviButton1.innerHTML ="Go find enemies"
     naviButton1.onclick = function(){
+        daButton.style.display = "block";
+        naviButton1.innerHTML = "Flee";
+        naviButton1.onclick = function(){
+            ButtonToNavigateMode();
+        };
+        naviButton2.style.display = "none";
         EnterNewBattle()
     }   
     naviButton2.innerHTML ="Rest and Heal"
     naviButton2.onclick = function(){
         playerStats.health = playerStats.health + 6
         myTableMaker.RefreshCharacterStatus()
-    if(playerStats.health>=100){
-        playerStats.health = 100
-        myTableMaker.RefreshCharacterStatus()
-        document.getElementById("infoPanel").innerHTML = "You are fully refreshed. Continue the fight lazy swine!"
-
-    }
+        if(playerStats.health>=100){
+            playerStats.health = 100
+            myTableMaker.RefreshCharacterStatus()
+            document.getElementById("infoPanel").innerHTML = "You are fully refreshed. Continue the fight lazy swine!"
+        }
     }     
-
+    daButton.style.display = "none";
+    naviButton1.innerHTML = "Go find enemies";
+    naviButton2.style.display = "block";
+    enemy.style.display = "none"
+    enemyroll.style.display = "none"
 }
 
+var enemy = document.getElementById("enemy");
+var enemyroll = document.getElementById("enemyroll");
 var naviButton1 = document.getElementById("navi1");
 var naviButton2 = document.getElementById("navi2");
 var daButton = document.getElementById("dicey");
-var currentEnemy = {health:10,armorrating:3,attackDamage:8}
+var currentEnemy = getAGoblin();
 var moveset = [ {movename:"surestrike", damage:8}, {movename:"lightstrike", damage:4} ]
 var playerStats = {weapon:"sword of ages", armor:5, health:100}
 var myTableMaker = new tablemaker(moveset,playerStats)
 myTableMaker.ShowCharacterStatus()
-ButtonToNavigate()
+ButtonToNavigateMode()
+
 </script>
 </body>
 </html>
